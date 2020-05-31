@@ -4,8 +4,11 @@ import styled from 'styled-components';
 import Navbar from '../components/organisms/Navbar/Navbar';
 
 const StyledWrapper = styled.div`
+  position: relative;
   margin-top: 10vh;
-  padding: 45px;
+  min-height: 90vh;
+  padding: 45px 60px;
+  /* overflow: hidden; */
 `;
 
 const PageTemplate = ({ children }) => (

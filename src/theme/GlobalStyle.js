@@ -21,6 +21,10 @@ const GlobalStyle = createGlobalStyle`
 		list-style: none;
 	}
 
+	button {
+		outline: none;
+		cursor: pointer;
+	}
 `;
 
 export default GlobalStyle;

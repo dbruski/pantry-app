@@ -1,7 +1,12 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import React, { useState, useContext } from 'react';
+import PropTypes from 'prop-types';
+import styled, { css } from 'styled-components';
 import PageTemplate from './PageTemplate';
 import Input from '../components/atoms/Input/Input';
+import ButtonIcon from '../components/atoms/Button/ButtonIcon';
+import List from '../components/organisms/List/List';
+import Modal from '../components/organisms/Modal/Modal';
+import { PantryContext } from '../context';
 
 const StyledHeader = styled.h1`
   font-size: ${({ theme }) => theme.fontSize.xl};
@@ -19,30 +24,39 @@ const StyledParagraph = styled.p`
   margin: -10px 0 10px 0px;
 `;
 
-const StyledContainer = styled.main`
-  margin-top: 25px;
-  min-height: 300px;
-  box-shadow: 0 10px 30px -10px hsl(0, 0%, 50%);
-`;
+const AddItemButton = styled(ButtonIcon)`
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  transform: translate(-50%, -50%);
+  width: 100px;
+  height: 100px;
+  font-size: ${({ theme }) => theme.fontSize.xl};
+  z-index: 99;
+  transition: 0.4s ease all;
 
-const StyledItem = styled.header`
-  display: grid;
-  grid-template-columns: 1fr 0.25fr 0.25fr;
-`;
-
-const StyledHeading = styled(StyledItem)`
-  /* background: ${({ theme }) => theme.primary}; */
-  color: ${({ theme }) => theme.primary};
-  font-weight: ${({ theme }) => theme.bold};
-  padding: 10px;
-  border-bottom: 1px solid ${({ theme }) => theme.primary};
+  ${({ isModalOpen }) =>
+    isModalOpen &&
+    css`
+      background: #f00;
+      transform: translate(-450%, -50%) rotate(-135deg);
+    `}
 `;
 
 const Category = ({ data }) => {
   const [searchInputValue, setSearchInputValue] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(true);
   const { category, items } = data;
 
+  const { state } = useContext(PantryContext);
+
   const handleSearchInputChange = (e) => setSearchInputValue(e.target.value);
+  const handleModalClick = () => {
+    setIsModalOpen(!isModalOpen);
+    console.log(data);
+    console.log(state);
+  };
+
   return (
     <PageTemplate>
       <StyledHeader>{category}</StyledHeader>
@@ -55,13 +69,11 @@ const Category = ({ data }) => {
         value={searchInputValue}
         onChange={handleSearchInputChange}
       />
-      <StyledContainer>
-        <StyledHeading>
-          <p>Name</p>
-          <p>Have/need</p>
-          <p>Actions</p>
-        </StyledHeading>
-      </StyledContainer>
+      <List items={items} />
+      <AddItemButton onClick={handleModalClick} isModalOpen={isModalOpen}>
+        +
+      </AddItemButton>
+      {isModalOpen && <Modal category={category} />}
     </PageTemplate>
   );
 };
