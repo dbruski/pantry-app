@@ -51,7 +51,7 @@ const Card = ({ group }) => {
       <Redirect
         to={{
           pathname: `pantry/${category}`,
-          state: group,
+          state: category,
         }}
       />
     );

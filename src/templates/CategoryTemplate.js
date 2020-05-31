@@ -33,7 +33,7 @@ const AddItemButton = styled(ButtonIcon)`
   height: 100px;
   font-size: ${({ theme }) => theme.fontSize.xl};
   z-index: 99;
-  transition: 0.4s ease all;
+  transition: 0.4s ease-in-out;
 
   ${({ isModalOpen }) =>
     isModalOpen &&
@@ -43,18 +43,22 @@ const AddItemButton = styled(ButtonIcon)`
     `}
 `;
 
-const Category = ({ data }) => {
-  const [searchInputValue, setSearchInputValue] = useState('');
-  const [isModalOpen, setIsModalOpen] = useState(true);
-  const { category, items } = data;
-
+const CategoryTemplate = ({ category }) => {
   const { state } = useContext(PantryContext);
+  const [group] = state.filter((group) => group.category === category);
+  const { items } = group;
+
+  const [searchInputValue, setSearchInputValue] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleSearchInputChange = (e) => setSearchInputValue(e.target.value);
+
+  const filteredItems = items.filter((item) =>
+    item.name.toLowerCase().includes(searchInputValue.toLowerCase()),
+  );
+
   const handleModalClick = () => {
     setIsModalOpen(!isModalOpen);
-    console.log(data);
-    console.log(state);
   };
 
   return (
@@ -69,7 +73,7 @@ const Category = ({ data }) => {
         value={searchInputValue}
         onChange={handleSearchInputChange}
       />
-      <List items={items} />
+      <List items={filteredItems} />
       <AddItemButton onClick={handleModalClick} isModalOpen={isModalOpen}>
         +
       </AddItemButton>
@@ -78,4 +82,8 @@ const Category = ({ data }) => {
   );
 };
 
-export default Category;
+CategoryTemplate.propTypes = {
+  category: PropTypes.string.isRequired,
+};
+
+export default CategoryTemplate;

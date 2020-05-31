@@ -34,13 +34,10 @@ const StyledWrapper = styled.div`
 const StyledHeader = styled.h1`
   font-size: ${({ theme }) => theme.fontSize.l};
   text-align: center;
-  /* align-self: center; */
-  /* background: blue; */
 `;
 
 const StyledForm = styled.form`
   display: flex;
-  /* background: red; */
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
@@ -51,12 +48,7 @@ const StyledParagraph = styled.p`
 `;
 
 const Modal = ({ category }) => {
-  const [FormValue, setFormValue] = useState({
-    name: '',
-    quantity: null,
-    minimum: null,
-    measure: '',
-  });
+  const [FormValue, setFormValue] = useState({});
   const { state, dispatch } = useContext(PantryContext);
 
   const handleInputChange = (e) =>
@@ -68,9 +60,14 @@ const Modal = ({ category }) => {
   };
 
   const addItem = (item, category) => {
-    console.log(state);
-    dispatch(addItemAction(item, category));
-    console.log(state);
+    const index = state.findIndex((group) => group.category === category);
+    dispatch(addItemAction(item, category, index));
+    setFormValue({
+      name: '',
+      quantity: '',
+      minimum: '',
+      measure: '',
+    });
   };
 
   return (
@@ -78,33 +75,33 @@ const Modal = ({ category }) => {
       <StyledHeader>Add new item to {category} </StyledHeader>
       <StyledForm autocomplete="off" onSubmit={handleSubmit}>
         <Input
-          placeholder="name"
+          placeholder="name*"
           onChange={handleInputChange}
           name="name"
           type="text"
-          isRequired
+          value={FormValue.name}
+          required
         />
         <Input
-          placeholder="quantity"
+          placeholder="quantity*"
           onChange={handleInputChange}
           name="quantity"
           type="number"
-          autocomplete="off"
-          isRequired
+          value={FormValue.quantity}
         />
         <Input
-          placeholder="minimum"
+          placeholder="minimum*"
           onChange={handleInputChange}
           name="minimum"
           type="number"
-          isRequired
+          value={FormValue.minimum}
         />
         <Input
-          placeholder="measure units"
+          placeholder="measure units*"
           onChange={handleInputChange}
           name="measure"
           type="text"
-          isRequired
+          value={FormValue.measure}
         />
         <Button>Add item</Button>
       </StyledForm>
