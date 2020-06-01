@@ -13,15 +13,10 @@ const App = () => {
       <MainTemplate>
         <BrowserRouter>
           <Switch>
-            <Route
-              exact
-              path={routes.home}
-              render={() => <Redirect to={routes.pantry} />}
-            />
-            <Route path={routes.pantryCategory} component={Category} />
             <Route exact path={routes.pantry} component={Pantry} />
             <Route exact path={routes.shopping} component={TestingComponents} />
             <Route exact path={routes.settings} component={TestingComponents} />
+            <Route path={routes.pantryCategory} component={Category} />
           </Switch>
         </BrowserRouter>
       </MainTemplate>

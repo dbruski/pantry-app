@@ -5,10 +5,10 @@ import { PantryContext } from '../context';
 
 const Pantry = () => {
   const { state } = useContext(PantryContext);
-
+  const { products } = state;
   return (
     <GridTemplate>
-      {state.map((group) => (
+      {products.map((group) => (
         <Card key={group.category} group={group} />
       ))}
     </GridTemplate>

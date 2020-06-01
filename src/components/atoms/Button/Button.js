@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const Button = styled.button`
   display: flex;
@@ -11,6 +11,12 @@ const Button = styled.button`
   border: none;
   border-radius: 50px;
   text-transform: uppercase;
+
+  ${({ secondary }) =>
+    secondary &&
+    css`
+      background: grey;
+    `}
 `;
 
 export default Button;

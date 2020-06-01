@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 const StyledWrapper = styled.div`
   height: 250px;
+  background: ${({ theme }) => theme.white};
   box-shadow: 0 10px 30px -10px hsl(0, 0%, 50%);
   border-radius: 12px;
   display: grid;
@@ -50,7 +51,7 @@ const Card = ({ group }) => {
     return (
       <Redirect
         to={{
-          pathname: `pantry/${category}`,
+          pathname: `/${category}`,
           state: category,
         }}
       />

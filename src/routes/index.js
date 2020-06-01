@@ -1,7 +1,6 @@
 export const routes = {
-  home: '/',
-  pantry: '/pantry',
-  pantryCategory: '/pantry/:category',
+  pantry: '/',
+  pantryCategory: '/:category',
   shopping: '/shopping-list',
   settings: '/settings',
 };

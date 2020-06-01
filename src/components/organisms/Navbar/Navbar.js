@@ -54,7 +54,7 @@ const SettingsButton = styled.a`
 
 const Navbar = () => (
   <StyledWrapper>
-    <StyledLogo as={NavLink} to={routes.home}>
+    <StyledLogo as={NavLink} to={routes.pantry}>
       PantryApp
     </StyledLogo>
     <StyledLinksList>

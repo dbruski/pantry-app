@@ -4,3 +4,17 @@ export const addItem = (item, category, index) => {
     payload: { item, category, index },
   };
 };
+
+export const editItem = (item, category, index) => {
+  return {
+    type: 'EDIT_ITEM',
+    payload: { item, category, index },
+  };
+};
+
+export const deleteItem = (item, category, index) => {
+  return {
+    type: 'DELETE_ITEM',
+    payload: { item, category, index },
+  };
+};

@@ -8,6 +8,7 @@ const StyledWrapper = styled.div`
   margin-top: 10vh;
   min-height: 90vh;
   padding: 45px 60px;
+  background: ${({ theme }) => theme.lightgrey};
   /* overflow: hidden; */
 `;
 

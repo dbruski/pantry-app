@@ -4,7 +4,6 @@ import CategoryTemplate from '../templates/CategoryTemplate';
 
 const Category = ({ location }) => {
   const { state } = location;
-
   return <CategoryTemplate category={state}></CategoryTemplate>;
 };
 
