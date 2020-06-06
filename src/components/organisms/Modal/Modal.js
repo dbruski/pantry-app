@@ -181,4 +181,18 @@ const Modal = ({ data, closeModal }) => {
   return <StyledWrapper modalType={type}>{renderSwitch(type)}</StyledWrapper>;
 };
 
+Modal.propTypes = {
+  data: PropTypes.shape({
+    item: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      quantity: PropTypes.string.isRequired,
+      minimum: PropTypes.string.isRequired,
+      measure: PropTypes.string.isRequired,
+    }),
+    category: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+  }),
+  closeModal: PropTypes.func.isRequired,
+};
+
 export default Modal;

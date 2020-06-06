@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -7,6 +7,7 @@ const StyledContainer = styled.ul`
   min-height: 300px;
   background: ${({ theme }) => theme.white};
   box-shadow: 0 10px 30px -10px hsl(0, 0%, 50%);
+  overflow: hidden;
 `;
 
 const StyledItem = styled.li`
@@ -84,13 +85,7 @@ const List = ({ items, category, setIsModalVisible }) => {
             </StyledActionLink>
             /
             <StyledActionLink
-              onClick={(e) =>
-                handleModalToggle(
-                  e,
-                  { name, quantity, minimum, measure },
-                  category,
-                )
-              }
+              onClick={(e) => handleModalToggle(e, { name }, category)}
             >
               delete
             </StyledActionLink>
@@ -99,6 +94,19 @@ const List = ({ items, category, setIsModalVisible }) => {
       ))}
     </StyledContainer>
   );
+};
+
+List.propTypes = {
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.string.isRequired,
+      quantity: PropTypes.number.isRequired,
+      minimum: PropTypes.number.isRequired,
+      measure: PropTypes.string.isRequired,
+    }),
+  ),
+  category: PropTypes.string.isRequired,
+  setIsModalVisible: PropTypes.func.isRequired,
 };
 
 export default List;
