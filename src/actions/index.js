@@ -18,3 +18,10 @@ export const deleteItem = (item, category, index) => {
     payload: { item, category, index },
   };
 };
+
+export const boughtItem = (item, category, bought, index) => {
+  return {
+    type: 'BOUGHT_ITEM',
+    payload: { item, category, index, bought },
+  };
+};

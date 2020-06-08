@@ -7,6 +7,7 @@ import { PantryContext } from '../../../context';
 import {
   editItem as editItemAction,
   deleteItem as deleteItemAction,
+  boughtItem as boughtItemAction,
 } from '../../../actions';
 
 const StyledWrapper = styled.div`
@@ -27,6 +28,12 @@ const StyledWrapper = styled.div`
       ? css`
           height: 25vh;
           grid-template-rows: 0.25fr 0.75fr;
+        `
+      : null}
+  ${({ modalType }) =>
+    modalType === 'shopping'
+      ? css`
+          height: 25vh;
         `
       : null}
 `;
@@ -79,14 +86,13 @@ const Modal = ({ data, closeModal }) => {
   };
 
   const [FormValue, setFormValue] = useState(values);
+  const [BoughtValue, setBoughtValue] = useState(0);
 
   const handleInputChange = (e) =>
     setFormValue({ ...FormValue, [e.target.name]: e.target.value });
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    editItem(FormValue, category);
-  };
+  const handleBoughtInputChange = (e) =>
+    setBoughtValue(parseInt(e.target.value));
 
   const editItem = (item, category) => {
     const index = products.findIndex((group) => group.category === category);
@@ -98,8 +104,23 @@ const Modal = ({ data, closeModal }) => {
     dispatch(deleteItemAction(item, category, index));
   };
 
+  const boughtItem = (item, category, bought) => {
+    const index = products.findIndex((group) => group.category === category);
+    dispatch(boughtItemAction(item, category, bought, index));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    editItem(FormValue, category);
+  };
+
   const handleDeleteItem = () => {
     deleteItem(item, category);
+    closeModal();
+  };
+
+  const handleBoughtItem = () => {
+    boughtItem(item, category, BoughtValue);
     closeModal();
   };
 
@@ -173,6 +194,30 @@ const Modal = ({ data, closeModal }) => {
             </StyledForm>
           </>
         );
+      case 'shopping':
+        return (
+          <>
+            <StyledHeader>Bought {item.name}</StyledHeader>
+            <p>
+              How many {item.measure} of {item.name} did you buy?
+            </p>
+            <Input
+              placeholder="quantity*"
+              onChange={handleBoughtInputChange}
+              name="bought"
+              id="bought"
+              type="number"
+              required
+              value={BoughtValue}
+            />
+            <StyledButtonsContainer>
+              <StyledButton onClick={handleBoughtItem}>update</StyledButton>
+              <StyledButton secondary onClick={closeModal}>
+                cancel
+              </StyledButton>
+            </StyledButtonsContainer>
+          </>
+        );
       default:
         return 'foo';
     }
@@ -185,8 +230,8 @@ Modal.propTypes = {
   data: PropTypes.shape({
     item: PropTypes.shape({
       name: PropTypes.string.isRequired,
-      quantity: PropTypes.string.isRequired,
-      minimum: PropTypes.string.isRequired,
+      quantity: PropTypes.number.isRequired,
+      minimum: PropTypes.number.isRequired,
       measure: PropTypes.string.isRequired,
     }),
     category: PropTypes.string.isRequired,

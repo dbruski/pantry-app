@@ -26,6 +26,12 @@ export const initial = {
           minimum: 2,
           measure: 'kg',
         },
+        {
+          name: 'tomatoes',
+          quantity: 0,
+          minimum: 1,
+          measure: 'szt.',
+        },
       ],
     },
     {

@@ -48,7 +48,30 @@ const reducer = (state, { type, payload }) => {
           },
         ],
       };
-
+    case 'BOUGHT_ITEM':
+      return {
+        ...state,
+        products: [
+          ...state.products.filter(
+            (group) => group.category !== payload.category,
+          ),
+          {
+            category: payload.category,
+            items: [
+              ...state.products[payload.index].items.map((item) =>
+                item.name === payload.item.name
+                  ? {
+                      name: payload.item.name,
+                      quantity: payload.item.quantity + payload.bought,
+                      minimum: payload.item.minimum,
+                      measure: payload.item.measure,
+                    }
+                  : item,
+              ),
+            ],
+          },
+        ],
+      };
     default:
       return state;
   }
