@@ -25,3 +25,10 @@ export const boughtItem = (item, category, bought, index) => {
     payload: { item, category, index, bought },
   };
 };
+
+export const addCategory = (name) => {
+  return {
+    type: 'ADD_CATEGORY',
+    payload: { name },
+  };
+};

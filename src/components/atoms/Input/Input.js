@@ -16,6 +16,17 @@ const Input = styled.input`
     color: ${({ theme }) => theme.grey3};
   }
 
+  ${({ transparent }) =>
+    transparent &&
+    css`
+      width: 50%;
+      font-weight: ${({ theme }) => theme.bold};
+      color: hsl(0, 0%, 100%);
+      background: transparent;
+      border-radius: 0;
+      border-bottom: 1px solid hsl(0, 0%, 100%);
+    `}
+
   ${({ search }) =>
     search &&
     css`

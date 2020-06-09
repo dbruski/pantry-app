@@ -72,6 +72,11 @@ const reducer = (state, { type, payload }) => {
           },
         ],
       };
+    case 'ADD_CATEGORY':
+      return {
+        ...state,
+        products: [...state.products, { category: payload.name, items: [] }],
+      };
     default:
       return state;
   }
