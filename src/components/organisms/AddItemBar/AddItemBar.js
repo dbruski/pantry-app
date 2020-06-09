@@ -90,6 +90,7 @@ const AddItemBar = ({ category }) => {
           onChange={handleInputChange}
           name="quantity"
           type="number"
+          min="0"
           required
           value={FormValue.quantity}
         />
@@ -98,6 +99,7 @@ const AddItemBar = ({ category }) => {
           onChange={handleInputChange}
           name="minimum"
           type="number"
+          min="0"
           required
           value={FormValue.minimum}
         />

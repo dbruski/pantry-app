@@ -58,14 +58,14 @@ const Navbar = () => (
       PantryApp
     </StyledLogo>
     <StyledLinksList>
-      <StyledLink as={NavLink} to={routes.pantry} activeclass="active">
+      <StyledLink as={NavLink} exact to={routes.pantry} activeclass="active">
         Pantry
       </StyledLink>
       <StyledLink as={NavLink} to={routes.shopping} activeclass="active">
         Shopping List
       </StyledLink>
     </StyledLinksList>
-    <SettingsButton as={NavLink} to={routes.shopping} activeclass="active">
+    <SettingsButton as={NavLink} to={routes.settings} activeclass="active">
       O
     </SettingsButton>
   </StyledWrapper>

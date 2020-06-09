@@ -162,6 +162,7 @@ const Modal = ({ data, closeModal }) => {
                 name="quantity"
                 id="quantity"
                 type="number"
+                min="0"
                 required
                 value={FormValue.quantity}
               />
@@ -172,6 +173,7 @@ const Modal = ({ data, closeModal }) => {
                 name="minimum"
                 id="minimum"
                 type="number"
+                min="0"
                 required
                 value={FormValue.minimum}
               />
@@ -207,6 +209,7 @@ const Modal = ({ data, closeModal }) => {
               name="bought"
               id="bought"
               type="number"
+              min="0"
               required
               value={BoughtValue}
             />
