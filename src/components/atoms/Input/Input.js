@@ -25,6 +25,10 @@ const Input = styled.input`
       background: transparent;
       border-radius: 0;
       border-bottom: 1px solid hsl(0, 0%, 100%);
+
+      ::placeholder {
+        color: ${({ theme }) => theme.white};
+      }
     `}
 
   ${({ search }) =>

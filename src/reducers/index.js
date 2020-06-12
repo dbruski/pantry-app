@@ -77,9 +77,39 @@ const reducer = (state, { type, payload }) => {
         ...state,
         products: [...state.products, { category: payload.name, items: [] }],
       };
+    case 'EDIT_CATEGORY':
+      return {
+        ...state,
+        products: [
+          ...state.products.filter(
+            (group) => group.category !== payload.oldName,
+          ),
+          {
+            category: payload.newName,
+            items: [...state.products[payload.index].items],
+          },
+        ],
+      };
+    case 'DELETE_CATEGORY':
+      return {
+        ...state,
+        products: [
+          ...state.products.filter((group) => group.category !== payload.name),
+        ],
+      };
     default:
       return state;
   }
 };
 
 export default reducer;
+
+/*
+        products: [
+          ...state.products.filter((group) =>
+            group.category === payload.oldName
+              ? { category: payload.newName, items: [...group.items] }
+              : group,
+          ),
+        ],
+*/

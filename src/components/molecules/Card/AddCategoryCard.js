@@ -39,8 +39,6 @@ const StyledButton = styled.button`
   border: none;
 `;
 
-const StyledParagraph = styled.p``;
-
 const AddCategoryCard = () => {
   const { dispatch } = useContext(PantryContext);
   const [inputValue, setInputValue] = useState('');
@@ -54,10 +52,14 @@ const AddCategoryCard = () => {
   return (
     <StyledWrapper>
       <StyledHeader>
-        <Input transparent onChange={handleInputChange} value={inputValue} />
+        <Input
+          transparent
+          onChange={handleInputChange}
+          value={inputValue}
+          placeholder="Add new category"
+        />
       </StyledHeader>
       <StyledContainer>
-        <StyledParagraph>Add new category</StyledParagraph>
         <StyledButton onClick={handleAddCategory}>+</StyledButton>
       </StyledContainer>
     </StyledWrapper>

@@ -32,3 +32,17 @@ export const addCategory = (name) => {
     payload: { name },
   };
 };
+
+export const editCategory = (oldName, newName, index) => {
+  return {
+    type: 'EDIT_CATEGORY',
+    payload: { oldName, newName, index },
+  };
+};
+
+export const deleteCategory = (name) => {
+  return {
+    type: 'DELETE_CATEGORY',
+    payload: { name },
+  };
+};

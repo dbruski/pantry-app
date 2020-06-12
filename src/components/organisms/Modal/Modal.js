@@ -112,6 +112,7 @@ const Modal = ({ data, closeModal }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     editItem(FormValue, category);
+    closeModal();
   };
 
   const handleDeleteItem = () => {

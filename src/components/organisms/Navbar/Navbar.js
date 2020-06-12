@@ -45,9 +45,9 @@ const StyledLink = styled.li`
   }
 `;
 
-const SettingsButton = styled.a`
+const SettingsButton = styled(StyledLink)`
+  align-self: center;
   text-align: right;
-  font-size: ${({ theme }) => theme.fontSize.xl};
   margin-right: 5vw;
   cursor: pointer;
 `;
@@ -66,7 +66,7 @@ const Navbar = () => (
       </StyledLink>
     </StyledLinksList>
     <SettingsButton as={NavLink} to={routes.settings} activeclass="active">
-      O
+      Settings
     </SettingsButton>
   </StyledWrapper>
 );
