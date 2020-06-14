@@ -19,6 +19,7 @@ const Input = styled.input`
   ${({ transparent }) =>
     transparent &&
     css`
+      padding: 10px;
       width: 50%;
       font-weight: ${({ theme }) => theme.bold};
       color: hsl(0, 0%, 100%);

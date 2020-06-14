@@ -22,12 +22,12 @@ const StyledHeader = styled.h1`
 `;
 
 const StyledSelect = styled.select`
-  padding: 25px;
+  padding: 10px 25px;
   border-radius: 12px;
 `;
 
-const StyledSelectItem = styled.option`
-  padding: 25px;
+const StyledButtonsContainer = styled.div`
+  display: flex;
 `;
 
 const SettingsTemplate = ({ state }) => {
@@ -35,10 +35,13 @@ const SettingsTemplate = ({ state }) => {
   const categories = state.products.map((group) => group.category);
   const [selectedCategory, setSelectedCategory] = useState('');
   const [newCategoryName, setNewCategoryName] = useState('');
+  const [isItemGoingToBeDeleted, setIsItemGoingToBeDeleted] = useState(false);
   const [isNameBeingChanged, setIsNameBeingChanged] = useState(false);
 
   const handleSelectChange = (e) => setSelectedCategory(e.target.value);
-  const handleChangeCategoryNameClik = () =>
+  const handleDeleteCategoryClick = () =>
+    setIsItemGoingToBeDeleted(!isItemGoingToBeDeleted);
+  const handleChangeCategoryNameClick = () =>
     setIsNameBeingChanged(!isNameBeingChanged);
   const handleInputChange = (e) => setNewCategoryName(e.target.value);
 
@@ -56,26 +59,35 @@ const SettingsTemplate = ({ state }) => {
     <PageTemplate>
       <StyledHeader>Settings</StyledHeader>
       <StyledSelect onChange={handleSelectChange} value={selectedCategory}>
-        <StyledSelectItem value="">select category</StyledSelectItem>
+        <option value="">select category</option>
         {categories.map((category) => (
-          <StyledSelectItem
-            key={category}
-            value={category}
-            onChange={handleSelectChange}
-          >
+          <option key={category} value={category} onChange={handleSelectChange}>
             {category}
-          </StyledSelectItem>
+          </option>
         ))}
       </StyledSelect>
       {selectedCategory && (
         <>
           <StyledHeader small>WHAT DO you want to do</StyledHeader>
-          <Button onClick={handleChangeCategoryNameClik}>
-            Change category name
-          </Button>
-          <Button secondary onClick={deleteCategory}>
-            Delete category
-          </Button>
+          <StyledButtonsContainer>
+            <Button onClick={handleChangeCategoryNameClick}>
+              Change category name
+            </Button>
+            <Button secondary onClick={handleDeleteCategoryClick}>
+              Delete category
+            </Button>
+          </StyledButtonsContainer>
+          {isItemGoingToBeDeleted && (
+            <>
+              <StyledHeader small>Are you sure?</StyledHeader>
+              <StyledButtonsContainer>
+                <Button onClick={deleteCategory}>delete</Button>
+                <Button secondary onClick={handleDeleteCategoryClick}>
+                  return
+                </Button>
+              </StyledButtonsContainer>
+            </>
+          )}
           {isNameBeingChanged && (
             <>
               <StyledHeader small>New category name</StyledHeader>
@@ -86,7 +98,12 @@ const SettingsTemplate = ({ state }) => {
                 onChange={handleInputChange}
                 required
               />
-              <Button onClick={editCategory}>change</Button>
+              <StyledButtonsContainer>
+                <Button onClick={editCategory}>change</Button>
+                <Button secondary onClick={handleChangeCategoryNameClick}>
+                  return
+                </Button>
+              </StyledButtonsContainer>
             </>
           )}
         </>

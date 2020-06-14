@@ -47,18 +47,11 @@ const StyledHole = styled.div`
   border-radius: 50px;
 `;
 
-const StyledAction = styled.p`
-  opacity: 0;
-  transition: 0.2s ease-in-out;
-  cursor: pointer;
-`;
-
 const StyledItem = styled.li`
   padding: 0 40px 0 45px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  transition: 3s ease-in-out;
 
   ::first-letter {
     text-transform: uppercase;
@@ -74,15 +67,15 @@ const StyledItem = styled.li`
     border-radius: 25%;
     transition: 0.3s ease-in-out;
   }
-
-  :hover {
-    ::after {
-      width: 10%;
-    }
-    ${StyledAction} {
-      opacity: 1;
-    }
+  :hover::after {
+    width: 10%;
   }
+}
+`;
+
+const StyledAction = styled.p`
+  transition: 0.2s ease-in-out;
+  cursor: pointer;
 `;
 
 const StyledItemCategory = styled.li`

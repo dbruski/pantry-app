@@ -33,7 +33,7 @@ const StyledWrapper = styled.div`
   ${({ modalType }) =>
     modalType === 'shopping'
       ? css`
-          height: 25vh;
+          height: 30vh;
         `
       : null}
 `;
@@ -50,18 +50,29 @@ const StyledHeader = styled.h1`
   border-top-right-radius: 18px;
 `;
 
-const StyledButtonsContainer = styled.div`
+const StyledContainer = styled.div`
+  padding: 20px;
   display: flex;
+  flex-direction: column;
   justify-content: space-around;
   align-items: center;
 `;
 
+const StyledButtonsContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
 const StyledButton = styled(Button)`
-  height: 50%;
-  width: 25%;
+  height: 100%;
+  width: 50%;
 `;
 
 const StyledForm = styled.form`
+  width: 50%;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -133,12 +144,14 @@ const Modal = ({ data, closeModal }) => {
             <StyledHeader>
               Are you sure you want to delete {item.name}?
             </StyledHeader>
-            <StyledButtonsContainer>
-              <StyledButton onClick={handleDeleteItem}>confirm</StyledButton>
-              <StyledButton secondary onClick={closeModal}>
-                cancel
-              </StyledButton>
-            </StyledButtonsContainer>
+            <StyledContainer>
+              <StyledButtonsContainer>
+                <StyledButton onClick={handleDeleteItem}>confirm</StyledButton>
+                <StyledButton secondary onClick={closeModal}>
+                  cancel
+                </StyledButton>
+              </StyledButtonsContainer>
+            </StyledContainer>
           </>
         );
       case 'edit':
@@ -201,25 +214,27 @@ const Modal = ({ data, closeModal }) => {
         return (
           <>
             <StyledHeader>Bought {item.name}</StyledHeader>
-            <p>
-              How many {item.measure} of {item.name} did you buy?
-            </p>
-            <Input
-              placeholder="quantity*"
-              onChange={handleBoughtInputChange}
-              name="bought"
-              id="bought"
-              type="number"
-              min="0"
-              required
-              value={BoughtValue}
-            />
-            <StyledButtonsContainer>
-              <StyledButton onClick={handleBoughtItem}>update</StyledButton>
-              <StyledButton secondary onClick={closeModal}>
-                cancel
-              </StyledButton>
-            </StyledButtonsContainer>
+            <StyledContainer>
+              <p>
+                How many {item.measure} of {item.name} did you buy?
+              </p>
+              <Input
+                placeholder="quantity*"
+                onChange={handleBoughtInputChange}
+                name="bought"
+                id="bought"
+                type="number"
+                min="0"
+                required
+                value={BoughtValue}
+              />
+              <StyledButtonsContainer>
+                <StyledButton onClick={handleBoughtItem}>update</StyledButton>
+                <StyledButton secondary onClick={closeModal}>
+                  cancel
+                </StyledButton>
+              </StyledButtonsContainer>
+            </StyledContainer>
           </>
         );
       default:

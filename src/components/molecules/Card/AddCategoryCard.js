@@ -56,7 +56,7 @@ const AddCategoryCard = () => {
           transparent
           onChange={handleInputChange}
           value={inputValue}
-          placeholder="Add new category"
+          placeholder="new category"
         />
       </StyledHeader>
       <StyledContainer>
