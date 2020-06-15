@@ -12,7 +12,7 @@ import {
 
 const StyledHeader = styled.h1`
   font-size: ${({ theme }) => theme.fontSize.xl};
-  margin-bottom: 5px;
+  margin: 5px 0;
 
   ${({ small }) =>
     small &&
@@ -28,6 +28,7 @@ const StyledSelect = styled.select`
 
 const StyledButtonsContainer = styled.div`
   display: flex;
+  margin: 10px 0;
 `;
 
 const SettingsTemplate = ({ state }) => {
@@ -39,25 +40,35 @@ const SettingsTemplate = ({ state }) => {
   const [isNameBeingChanged, setIsNameBeingChanged] = useState(false);
 
   const handleSelectChange = (e) => setSelectedCategory(e.target.value);
-  const handleDeleteCategoryClick = () =>
+  const handleDeleteCategoryClick = () => {
     setIsItemGoingToBeDeleted(!isItemGoingToBeDeleted);
-  const handleChangeCategoryNameClick = () =>
+    setIsNameBeingChanged(false);
+  };
+  const handleChangeCategoryNameClick = () => {
     setIsNameBeingChanged(!isNameBeingChanged);
+    setIsItemGoingToBeDeleted(false);
+  };
   const handleInputChange = (e) => setNewCategoryName(e.target.value);
 
-  const deleteCategory = () => dispatch(deleteCategoryAction(selectedCategory));
+  const deleteCategory = () => {
+    dispatch(deleteCategoryAction(selectedCategory));
+    setIsItemGoingToBeDeleted(false);
+  };
   const editCategory = () => {
     const index = state.products.findIndex(
       (group) => group.category === selectedCategory,
     );
     if (newCategoryName) {
       dispatch(editCategoryAction(selectedCategory, newCategoryName, index));
+      setIsNameBeingChanged(false);
+      setNewCategoryName('');
     }
   };
 
   return (
     <PageTemplate>
       <StyledHeader>Settings</StyledHeader>
+      <StyledHeader small>Category management</StyledHeader>
       <StyledSelect onChange={handleSelectChange} value={selectedCategory}>
         <option value="">select category</option>
         {categories.map((category) => (
@@ -68,7 +79,7 @@ const SettingsTemplate = ({ state }) => {
       </StyledSelect>
       {selectedCategory && (
         <>
-          <StyledHeader small>WHAT DO you want to do</StyledHeader>
+          <StyledHeader small>What would you like to do</StyledHeader>
           <StyledButtonsContainer>
             <Button onClick={handleChangeCategoryNameClick}>
               Change category name
@@ -90,7 +101,7 @@ const SettingsTemplate = ({ state }) => {
           )}
           {isNameBeingChanged && (
             <>
-              <StyledHeader small>New category name</StyledHeader>
+              <StyledHeader small>Enter new name</StyledHeader>
               <Input
                 type="text"
                 placeholder="new name"
