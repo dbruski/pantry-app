@@ -9,31 +9,46 @@ import {
   deleteItem as deleteItemAction,
   boughtItem as boughtItemAction,
 } from '../../../actions';
+import { device } from '../../../helpers/device';
 
 const StyledWrapper = styled.div`
   position: absolute;
   left: 50%;
   top: 45%;
   transform: translate(-50%, -50%);
-  width: 35vw;
-  height: 70vh;
+  width: 85vw;
+  height: 80vh;
   display: grid;
   grid-template-rows: 0.2fr 1fr;
   background: white;
   box-shadow: 0 10px 30px -10px hsl(0, 0%, 50%);
   border-radius: 18px;
+  z-index: 9999;
+
+  @media ${device.screen} {
+    width: 30vw;
+    height: 70vh;
+  }
 
   ${({ modalType }) =>
     modalType === 'delete'
       ? css`
-          height: 25vh;
+          height: 30vh;
           grid-template-rows: 0.25fr 0.75fr;
+
+          @media ${device.screen} {
+            height: 25vh;
+          }
         `
       : null}
+
   ${({ modalType }) =>
     modalType === 'shopping'
       ? css`
-          height: 30vh;
+          height: 40vh;
+          @media ${device.screen} {
+            height: 30vh;
+          }
         `
       : null}
 `;
@@ -43,6 +58,7 @@ const StyledHeader = styled.h1`
   justify-content: center;
   align-items: center;
   padding: 20px;
+  text-align: center;
   color: ${({ theme }) => theme.white};
   font-size: ${({ theme }) => theme.fontSize.l};
   background: ${({ theme }) => theme.primary};
@@ -61,7 +77,7 @@ const StyledContainer = styled.div`
 const StyledButtonsContainer = styled.div`
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
 `;
 
@@ -202,7 +218,7 @@ const Modal = ({ data, closeModal }) => {
                 value={FormValue.measure}
               />
               <StyledButtonsContainer>
-                <Button>Edit item</Button>
+                <Button>Edit</Button>
                 <Button secondary onClick={closeModal}>
                   Cancel
                 </Button>

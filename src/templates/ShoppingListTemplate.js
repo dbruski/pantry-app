@@ -3,6 +3,9 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import PageTemplate from './PageTemplate';
 import Modal from '../components/organisms/Modal/Modal';
+import { device } from '../helpers/device';
+import { faCartArrowDown } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const StyledHeader = styled.h1`
   font-size: ${({ theme }) => theme.fontSize.xl};
@@ -10,7 +13,7 @@ const StyledHeader = styled.h1`
 `;
 
 const StyledContainer = styled.div`
-  width: 50vw;
+  width: 90vw;
   margin-top: 25px;
   min-height: 300px;
   padding-bottom: 24px;
@@ -21,7 +24,7 @@ const StyledContainer = styled.div`
   );
   box-shadow: 0 10px 20px -10px hsl(0, 0%, 50%);
   display: grid;
-  grid-template-columns: 80px 1fr 0.2fr;
+  grid-template-columns: 40px 1fr 0.15fr;
   overflow: hidden;
 
   ::after {
@@ -29,6 +32,11 @@ const StyledContainer = styled.div`
     height: calc(100% + 24px);
     width: 2px;
     background: #f00;
+  }
+
+  @media ${device.screen} {
+    width: 50vw;
+    grid-template-columns: 80px 1fr 0.2fr;
   }
 `;
 
@@ -40,15 +48,20 @@ const StyledHolesContainer = styled.div`
 `;
 
 const StyledHole = styled.div`
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
   background: ${({ theme }) => theme.grey};
   box-shadow: inset 0 2px 2px hsl(0, 0%, 30%);
   border-radius: 50px;
+
+  @media ${device.screen} {
+    width: 30px;
+    height: 30px;
+  }
 `;
 
 const StyledItem = styled.li`
-  padding: 0 40px 0 45px;
+  padding: 0 40px 0 25px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -57,20 +70,23 @@ const StyledItem = styled.li`
     text-transform: uppercase;
   }
 
-  ::after {
-    content: '';
-    position: absolute;
-    transform: translate(0, 50%);
-    width: 0;
-    height: 2px;
-    background: black;
-    border-radius: 25%;
-    transition: 0.3s ease-in-out;
+  @media ${device.screen} {
+    padding: 0 40px 0 45px;
+
+    ::after {
+      content: '';
+      position: absolute;
+      transform: translate(0, 50%);
+      width: 0;
+      height: 2px;
+      background: black;
+      border-radius: 25%;
+      transition: 0.3s ease-in-out;
+    }
+    :hover::after {
+      width: 10%;
+    }
   }
-  :hover::after {
-    width: 10%;
-  }
-}
 `;
 
 const StyledAction = styled.p`
@@ -79,17 +95,30 @@ const StyledAction = styled.p`
 `;
 
 const StyledItemCategory = styled.li`
-  padding: 0 0 0 40px;
+  padding: 0 0 0 20px;
   font-weight: ${({ theme }) => theme.bold};
   height: 24px;
+
+  @media ${device.screen} {
+    padding: 0 0 0 40px;
+  }
 `;
 
 const StyledItemHeader = styled.li`
-  padding: 10px 40px 24px 40px;
-  font-size: ${({ theme }) => theme.fontSize.xl};
+  padding: 24px 40px 26px 20px;
+  font-size: ${({ theme }) => theme.fontSize.l};
+
+  @media ${device.screen} {
+    padding: 10px 40px 24px 40px;
+    font-size: ${({ theme }) => theme.fontSize.xl};
+  }
 `;
 
 const StyledParagraph = styled.p`
+  font-size: ${({ theme }) => theme.fontSize.m};
+`;
+
+const StyledCardIcon = styled(FontAwesomeIcon)`
   font-size: ${({ theme }) => theme.fontSize.m};
 `;
 
@@ -150,7 +179,7 @@ const ShoppingListTemplate = ({ products }) => {
                     <StyledAction
                       onClick={() => handleModalToggle(item, group.category)}
                     >
-                      V
+                      <StyledCardIcon icon={faCartArrowDown} />
                     </StyledAction>
                   </StyledItem>
                 ) : null,

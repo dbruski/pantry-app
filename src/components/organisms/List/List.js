@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { device } from '../../../helpers/device';
+import { faTrashAlt, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const StyledContainer = styled.ul`
   margin-top: 25px;
@@ -12,19 +15,22 @@ const StyledContainer = styled.ul`
 
 const StyledItem = styled.li`
   display: grid;
-  grid-template-columns: 1fr 0.25fr 0.25fr;
-  padding: 15px 20px;
+  grid-template-columns: repeat(3, 0.33fr);
+  padding: 15px 10px;
   transition: 0.4s ease;
 
-  :hover {
-    background: ${({ theme }) => theme.grey};
+  @media ${device.screen} {
+    grid-template-columns: 1fr 0.25fr 0.25fr;
+    padding: 15px 20px;
+
+    :hover {
+      background: ${({ theme }) => theme.grey};
+    }
   }
 `;
 
-const StyledHeading = styled.li`
+const StyledHeading = styled(StyledItem)`
   display: grid;
-  grid-template-columns: 1fr 0.25fr 0.25fr;
-  padding: 15px 20px;
   color: ${({ theme }) => theme.primary};
   font-weight: ${({ theme }) => theme.bold};
   border-bottom: 1px solid ${({ theme }) => theme.primary};
@@ -44,15 +50,23 @@ const StyledItemActions = styled.p`
   text-align: center;
 `;
 
-const StyledActionLink = styled.span`
+const StyledDeleteIcon = styled.span`
+  color: hsl(0, 90%, 50%);
   font-weight: ${({ theme }) => theme.bold};
+  font-size: ${({ theme }) => theme.fontSize.m};
+  padding: 0 10px;
+  cursor: pointer;
+`;
+
+const StyledEditIcon = styled(StyledDeleteIcon)`
+  color: hsl(45, 90%, 50%);
 `;
 
 const List = ({ items, category, setIsModalVisible }) => {
-  const handleModalToggle = (e, item, category) => {
+  const handleModalToggle = (type, item, category) => {
     setIsModalVisible({
       modalVisible: true,
-      modalType: e.target.textContent,
+      modalType: type,
       item,
       category,
     });
@@ -72,23 +86,23 @@ const List = ({ items, category, setIsModalVisible }) => {
             {quantity} / {minimum} {measure}
           </StyledItemAmount>
           <StyledItemActions>
-            <StyledActionLink
+            <StyledEditIcon
               onClick={(e) =>
                 handleModalToggle(
-                  e,
+                  'edit',
                   { name, quantity, minimum, measure },
                   category,
                 )
               }
             >
-              edit
-            </StyledActionLink>
+              <FontAwesomeIcon icon={faEdit} />
+            </StyledEditIcon>
             /
-            <StyledActionLink
-              onClick={(e) => handleModalToggle(e, { name }, category)}
+            <StyledDeleteIcon
+              onClick={(e) => handleModalToggle('delete', { name }, category)}
             >
-              delete
-            </StyledActionLink>
+              <FontAwesomeIcon icon={faTrashAlt} />
+            </StyledDeleteIcon>
           </StyledItemActions>
         </StyledItem>
       ))}

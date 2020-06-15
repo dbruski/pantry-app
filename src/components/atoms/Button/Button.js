@@ -5,6 +5,7 @@ const Button = styled.button`
   justify-content: center;
   align-items: center;
   padding: 15px 20px;
+  min-width: 96px;
   background: ${({ theme }) => theme.primary};
   color: ${({ theme }) => theme.white};
   font-weight: ${({ theme }) => theme.bold};

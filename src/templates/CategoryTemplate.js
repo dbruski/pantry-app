@@ -8,6 +8,7 @@ import List from '../components/organisms/List/List';
 import AddItemBar from '../components/organisms/AddItemBar/AddItemBar';
 import { PantryContext } from '../context';
 import Modal from '../components/organisms/Modal/Modal';
+import { device } from '../helpers/device';
 
 const StyledHeader = styled.h1`
   font-size: ${({ theme }) => theme.fontSize.xl};
@@ -26,9 +27,9 @@ const StyledParagraph = styled.p`
 `;
 
 const AddItemButton = styled(ButtonIcon)`
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
+  position: fixed;
+  bottom: 25px;
+  right: -25px;
   transform: translate(-50%, -50%);
   width: 100px;
   height: 100px;
@@ -36,12 +37,25 @@ const AddItemButton = styled(ButtonIcon)`
   z-index: 99;
   transition: 0.4s ease-in-out;
 
+
   ${({ isAddItemBarOpen }) =>
     isAddItemBarOpen &&
     css`
       background: #f00;
-      transform: translate(-450%, -50%) rotate(-135deg);
+      transform: translate(-275%, -50%) rotate(-135deg);
     `}
+
+  @media ${device.screen} {
+    bottom: 10px;
+    right: 10px;
+
+    ${({ isAddItemBarOpen }) =>
+      isAddItemBarOpen &&
+      css`
+        background: #f00;
+        transform: translate(-450%, -50%) rotate(-135deg);
+      `}
+  }
 `;
 
 const CategoryTemplate = ({ category }) => {

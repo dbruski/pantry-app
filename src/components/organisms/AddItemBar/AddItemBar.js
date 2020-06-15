@@ -5,14 +5,15 @@ import Input from '../../atoms/Input/Input';
 import Button from '../../atoms/Button/Button';
 import { PantryContext } from '../../../context';
 import { addItem as addItemAction } from '../../../actions';
+import { device } from '../../../helpers/device';
 
 const StyledWrapper = styled.div`
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 100%;
   display: grid;
   grid-template-rows: 0.25fr 1fr 0.25fr;
-  width: 30vw;
+  width: 100vw;
   height: 100vh;
   box-shadow: 0 10px 30px -10px hsl(0, 0%, 50%);
   padding: 75px 25px 150px 25px;
@@ -28,6 +29,10 @@ const StyledWrapper = styled.div`
     100% {
       transform: translate(-100%, -55%);
     }
+  }
+
+  @media ${device.screen} {
+    width: 30vw;
   }
 `;
 

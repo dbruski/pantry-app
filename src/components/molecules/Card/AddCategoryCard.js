@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import Input from '../../atoms/Input/Input';
 import { addCategory as addCategoryAction } from '../../../actions';
 import { PantryContext } from '../../../context';
+import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const StyledWrapper = styled.div`
   height: 250px;
@@ -28,7 +30,7 @@ const StyledContainer = styled.div`
 `;
 
 const StyledButton = styled.button`
-  font-size: 180px;
+  font-size: 100px;
   color: ${({ theme }) => theme.primary};
   width: 125px;
   height: 125px;
@@ -60,7 +62,9 @@ const AddCategoryCard = () => {
         />
       </StyledHeader>
       <StyledContainer>
-        <StyledButton onClick={handleAddCategory}>+</StyledButton>
+        <StyledButton onClick={handleAddCategory}>
+          <FontAwesomeIcon icon={faPlus} />
+        </StyledButton>
       </StyledContainer>
     </StyledWrapper>
   );
