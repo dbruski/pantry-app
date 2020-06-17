@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 const StyledWrapper = styled.div`
   height: 250px;
-  background: ${({ theme }) => theme.white};
+  background: ${({ theme }) => theme.grey};
   box-shadow: 0 10px 30px -10px hsl(0, 0%, 50%);
   border-radius: 12px;
   display: grid;

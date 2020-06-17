@@ -46,3 +46,9 @@ export const deleteCategory = (name) => {
     payload: { name },
   };
 };
+
+export const changeTheme = () => {
+  return {
+    type: 'CHANGE_THEME',
+  };
+};

@@ -20,7 +20,7 @@ const StyledWrapper = styled.div`
   height: 80vh;
   display: grid;
   grid-template-rows: 0.2fr 1fr;
-  background: white;
+  background: ${({ theme }) => theme.white};
   box-shadow: 0 10px 30px -10px hsl(0, 0%, 50%);
   border-radius: 18px;
   z-index: 9999;

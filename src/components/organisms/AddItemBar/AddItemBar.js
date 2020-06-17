@@ -33,6 +33,7 @@ const StyledWrapper = styled.div`
 
   @media ${device.screen} {
     width: 30vw;
+    top: 65%;
   }
 `;
 

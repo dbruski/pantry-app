@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import PageTemplate from './PageTemplate';
@@ -6,12 +6,12 @@ import Input from '../components/atoms/Input/Input';
 import ButtonIcon from '../components/atoms/Button/ButtonIcon';
 import List from '../components/organisms/List/List';
 import AddItemBar from '../components/organisms/AddItemBar/AddItemBar';
-import { PantryContext } from '../context';
 import Modal from '../components/organisms/Modal/Modal';
 import { device } from '../helpers/device';
 
 const StyledHeader = styled.h1`
   font-size: ${({ theme }) => theme.fontSize.xl};
+  color: ${({ theme }) => theme.black};
   margin-bottom: 5px;
 
   ::first-letter {
@@ -58,9 +58,9 @@ const AddItemButton = styled(ButtonIcon)`
   }
 `;
 
-const CategoryTemplate = ({ category }) => {
-  const { state } = useContext(PantryContext);
-  const [group] = state.products.filter((group) => group.category === category);
+const CategoryTemplate = ({ category, state }) => {
+  const { products } = state;
+  const [group] = products.filter((group) => group.category === category);
   const { items } = group;
 
   const [searchInputValue, setSearchInputValue] = useState('');

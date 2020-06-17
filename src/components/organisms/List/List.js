@@ -18,6 +18,7 @@ const StyledItem = styled.li`
   grid-template-columns: repeat(3, 0.33fr);
   padding: 15px 10px;
   transition: 0.4s ease;
+  color: ${({ theme }) => theme.black};
 
   @media ${device.screen} {
     grid-template-columns: 1fr 0.25fr 0.25fr;

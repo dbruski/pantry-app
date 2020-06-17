@@ -97,19 +97,14 @@ const reducer = (state, { type, payload }) => {
           ...state.products.filter((group) => group.category !== payload.name),
         ],
       };
+    case 'CHANGE_THEME':
+      return {
+        ...state,
+        isThemeDark: !state.isThemeDark,
+      };
     default:
       return state;
   }
 };
 
 export default reducer;
-
-/*
-        products: [
-          ...state.products.filter((group) =>
-            group.category === payload.oldName
-              ? { category: payload.newName, items: [...group.items] }
-              : group,
-          ),
-        ],
-*/

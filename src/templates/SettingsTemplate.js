@@ -5,12 +5,16 @@ import PageTemplate from './PageTemplate';
 import { PantryContext } from '../context';
 import Button from '../components/atoms/Button/Button';
 import Input from '../components/atoms/Input/Input';
+import Toggler from '../components/atoms/Toggler/Toggler';
 import {
   deleteCategory as deleteCategoryAction,
   editCategory as editCategoryAction,
+  changeTheme as changeThemeAction,
 } from '../actions';
+import { device } from '../helpers/device';
 
 const StyledHeader = styled.h1`
+  color: ${({ theme }) => theme.black};
   font-size: ${({ theme }) => theme.fontSize.xl};
   margin: 5px 0;
 
@@ -19,6 +23,20 @@ const StyledHeader = styled.h1`
     css`
       font-size: ${({ theme }) => theme.fontSize.l};
     `}
+`;
+
+const StyledContainer = styled.div`
+  @media ${device.screen} {
+    display: flex;
+    justify-content: space-between;
+  }
+`;
+
+const StyledGroup = styled.div`
+  margin: 50px 0;
+  @media ${device.screen} {
+    margin: 0;
+  }
 `;
 
 const StyledSelect = styled.select`
@@ -34,6 +52,7 @@ const StyledButtonsContainer = styled.div`
 const SettingsTemplate = ({ state }) => {
   const { dispatch } = useContext(PantryContext);
   const categories = state.products.map((group) => group.category);
+  const { isThemeDark } = state;
   const [selectedCategory, setSelectedCategory] = useState('');
   const [newCategoryName, setNewCategoryName] = useState('');
   const [isItemGoingToBeDeleted, setIsItemGoingToBeDeleted] = useState(false);
@@ -65,60 +84,76 @@ const SettingsTemplate = ({ state }) => {
     }
   };
 
+  const changeTheme = () => {
+    dispatch(changeThemeAction());
+  };
+
   return (
     <PageTemplate>
       <StyledHeader>Settings</StyledHeader>
-      <StyledHeader small>Category management</StyledHeader>
-      <StyledSelect onChange={handleSelectChange} value={selectedCategory}>
-        <option value="">select category</option>
-        {categories.map((category) => (
-          <option key={category} value={category} onChange={handleSelectChange}>
-            {category}
-          </option>
-        ))}
-      </StyledSelect>
-      {selectedCategory && (
-        <>
-          <StyledHeader small>What would you like to do</StyledHeader>
-          <StyledButtonsContainer>
-            <Button onClick={handleChangeCategoryNameClick}>
-              Change category name
-            </Button>
-            <Button secondary onClick={handleDeleteCategoryClick}>
-              Delete category
-            </Button>
-          </StyledButtonsContainer>
-          {isItemGoingToBeDeleted && (
+      <StyledContainer>
+        <StyledGroup>
+          <StyledHeader small>Category management</StyledHeader>
+          <StyledSelect onChange={handleSelectChange} value={selectedCategory}>
+            <option value="">select category</option>
+            {categories.map((category) => (
+              <option
+                key={category}
+                value={category}
+                onChange={handleSelectChange}
+              >
+                {category}
+              </option>
+            ))}
+          </StyledSelect>
+          {selectedCategory && (
             <>
-              <StyledHeader small>Are you sure?</StyledHeader>
+              <StyledHeader small>What would you like to do</StyledHeader>
               <StyledButtonsContainer>
-                <Button onClick={deleteCategory}>delete</Button>
+                <Button onClick={handleChangeCategoryNameClick}>
+                  Change category name
+                </Button>
                 <Button secondary onClick={handleDeleteCategoryClick}>
-                  return
+                  Delete category
                 </Button>
               </StyledButtonsContainer>
+              {isItemGoingToBeDeleted && (
+                <>
+                  <StyledHeader small>Are you sure?</StyledHeader>
+                  <StyledButtonsContainer>
+                    <Button onClick={deleteCategory}>delete</Button>
+                    <Button secondary onClick={handleDeleteCategoryClick}>
+                      return
+                    </Button>
+                  </StyledButtonsContainer>
+                </>
+              )}
+              {isNameBeingChanged && (
+                <>
+                  <StyledHeader small>Enter new name</StyledHeader>
+                  <Input
+                    type="text"
+                    placeholder="new name"
+                    value={newCategoryName}
+                    onChange={handleInputChange}
+                    required
+                  />
+                  <StyledButtonsContainer>
+                    <Button onClick={editCategory}>change</Button>
+                    <Button secondary onClick={handleChangeCategoryNameClick}>
+                      return
+                    </Button>
+                  </StyledButtonsContainer>
+                </>
+              )}
             </>
           )}
-          {isNameBeingChanged && (
-            <>
-              <StyledHeader small>Enter new name</StyledHeader>
-              <Input
-                type="text"
-                placeholder="new name"
-                value={newCategoryName}
-                onChange={handleInputChange}
-                required
-              />
-              <StyledButtonsContainer>
-                <Button onClick={editCategory}>change</Button>
-                <Button secondary onClick={handleChangeCategoryNameClick}>
-                  return
-                </Button>
-              </StyledButtonsContainer>
-            </>
-          )}
-        </>
-      )}
+        </StyledGroup>
+        <StyledGroup>
+          <StyledHeader small>Theme management</StyledHeader>
+          <Toggler changeFunction={changeTheme} checked={isThemeDark} />
+        </StyledGroup>
+      </StyledContainer>
     </PageTemplate>
   );
 };

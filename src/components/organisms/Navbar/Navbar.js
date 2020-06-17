@@ -27,6 +27,7 @@ const StyledWrapper = styled.nav`
     left: 0;
     height: 10vh;
     padding: 15px 0;
+    box-shadow: 0 0 0 0;
   }
 `;
 
