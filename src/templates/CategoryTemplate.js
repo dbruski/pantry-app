@@ -62,6 +62,11 @@ const AddItemButton = styled(ButtonIcon)`
 
 const CategoryTemplate = ({ category, state }) => {
   const { products } = state;
+
+  if (!category) {
+    category = window.location.pathname.substring(1);
+  }
+
   const [group] = products.filter((group) => group.category === category);
   const items = group ? [...group.items] : [];
 
