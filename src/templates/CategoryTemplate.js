@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import { routes } from '../routes';
 import styled, { css } from 'styled-components';
 import PageTemplate from './PageTemplate';
 import Input from '../components/atoms/Input/Input';
@@ -61,7 +63,7 @@ const AddItemButton = styled(ButtonIcon)`
 const CategoryTemplate = ({ category, state }) => {
   const { products } = state;
   const [group] = products.filter((group) => group.category === category);
-  const { items } = group;
+  const items = group ? [...group.items] : [];
 
   const [searchInputValue, setSearchInputValue] = useState('');
   const [isAddItemBarOpen, setIsAddItemBarOpen] = useState(false);
@@ -94,37 +96,46 @@ const CategoryTemplate = ({ category, state }) => {
 
   return (
     <PageTemplate>
-      <StyledHeader>{category}</StyledHeader>
-      <StyledParagraph>
-        {items.length} item{items.length > 1 ? 's' : null}
-      </StyledParagraph>
-      <Input
-        search
-        placeholder="search"
-        value={searchInputValue}
-        onChange={handleSearchInputChange}
-      />
-      <List
-        items={filteredItems}
-        category={category}
-        setIsModalVisible={setIsModalVisible}
-      />
-      <AddItemButton
-        onClick={handleAddClick}
-        isAddItemBarOpen={isAddItemBarOpen}
-      >
-        +
-      </AddItemButton>
-      {isAddItemBarOpen && <AddItemBar category={category} />}
-      {isModalVisible.modalVisible && (
-        <Modal
-          data={{
-            item: isModalVisible.item,
-            category: isModalVisible.category,
-            type: isModalVisible.modalType,
-          }}
-          closeModal={handleCloseModal}
-        />
+      {group ? (
+        <>
+          <StyledHeader>{category}</StyledHeader>
+          <StyledParagraph>
+            {group.items.length} item{group.items.length > 1 ? 's' : null}
+          </StyledParagraph>
+          <Input
+            search
+            placeholder="search"
+            value={searchInputValue}
+            onChange={handleSearchInputChange}
+          />
+          <List
+            items={filteredItems}
+            category={category}
+            setIsModalVisible={setIsModalVisible}
+          />
+          <AddItemButton
+            onClick={handleAddClick}
+            isAddItemBarOpen={isAddItemBarOpen}
+          >
+            +
+          </AddItemButton>
+          {isAddItemBarOpen && <AddItemBar category={category} />}
+          {isModalVisible.modalVisible && (
+            <Modal
+              data={{
+                item: isModalVisible.item,
+                category: isModalVisible.category,
+                type: isModalVisible.modalType,
+              }}
+              closeModal={handleCloseModal}
+            />
+          )}
+        </>
+      ) : (
+        <>
+          <StyledHeader>There isn't such page</StyledHeader>
+          <Link to={routes.pantry}>Go back to home</Link>
+        </>
       )}
     </PageTemplate>
   );
