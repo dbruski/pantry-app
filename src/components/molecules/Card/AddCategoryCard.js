@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useRef } from 'react';
 import styled from 'styled-components';
 import Input from '../../atoms/Input/Input';
 import { addCategory as addCategoryAction } from '../../../actions';
@@ -44,17 +44,22 @@ const StyledButton = styled.button`
 const AddCategoryCard = () => {
   const { dispatch } = useContext(PantryContext);
   const [inputValue, setInputValue] = useState('');
-
+  const inputField = useRef(null);
   const handleInputChange = (e) => setInputValue(e.target.value);
 
   const handleAddCategory = () => {
-    if (inputValue) dispatch(addCategoryAction(inputValue));
+    if (!inputValue) {
+      inputField.current.focus();
+    } else {
+      dispatch(addCategoryAction(inputValue));
+    }
     setInputValue('');
   };
   return (
     <StyledWrapper>
       <StyledHeader>
         <Input
+          ref={inputField}
           transparent
           onChange={handleInputChange}
           value={inputValue}

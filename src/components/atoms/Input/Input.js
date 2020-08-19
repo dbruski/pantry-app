@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import searchIcon from '../../../assets/icons/search.svg';
+import searchIcon from '../../../assets/search.svg';
 import { device } from '../../../helpers/device';
 
 const Input = styled.input`
