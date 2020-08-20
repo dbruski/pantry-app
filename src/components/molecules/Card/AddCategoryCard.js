@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef } from 'react';
+import React, { useState, useContext, useRef, useEffect } from 'react';
 import styled from 'styled-components';
 import Input from '../../atoms/Input/Input';
 import { addCategory as addCategoryAction } from '../../../actions';
@@ -41,14 +41,30 @@ const StyledButton = styled.button`
   border: none;
 `;
 
+const StyledErrorParagraph = styled.p`
+  color: hsl(0, 75%, 50%);
+  font-weight: ${({ theme }) => theme.bold};
+`;
+
 const AddCategoryCard = () => {
   const { state, dispatch } = useContext(PantryContext);
   const [inputValue, setInputValue] = useState('');
+  const [isAlertShown, setIsAlertShown] = useState(false);
   const inputField = useRef(null);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsAlertShown(false);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [isAlertShown]);
+
   const handleInputChange = (e) => setInputValue(e.target.value);
 
   const checkIfUnique = (wantToAdd) => {
-    const categories = state.products.map((group) => group.category);
+    const categories = state.products.map((group) =>
+      group.category.toLowerCase(),
+    );
     return categories.includes(wantToAdd.toLowerCase());
   };
 
@@ -56,8 +72,9 @@ const AddCategoryCard = () => {
     if (!inputValue) {
       inputField.current.focus();
     } else {
-      !checkIfUnique(inputValue) &&
-        dispatch(addCategoryAction(inputValue.toLowerCase()));
+      checkIfUnique(inputValue)
+        ? setIsAlertShown(true)
+        : dispatch(addCategoryAction(inputValue.toLowerCase()));
     }
     setInputValue('');
   };
@@ -74,6 +91,11 @@ const AddCategoryCard = () => {
         />
       </StyledHeader>
       <StyledContainer>
+        {isAlertShown && (
+          <StyledErrorParagraph>
+            That category already exists!
+          </StyledErrorParagraph>
+        )}
         <StyledButton onClick={handleAddCategory}>
           <FontAwesomeIcon icon={faPlus} />
         </StyledButton>

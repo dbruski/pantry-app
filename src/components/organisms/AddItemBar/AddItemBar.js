@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Input from '../../atoms/Input/Input';
@@ -49,6 +49,11 @@ const StyledForm = styled.form`
   justify-content: space-around;
 `;
 
+const StyledErrorParagraph = styled.p`
+  color: hsl(0, 75%, 50%);
+  font-weight: ${({ theme }) => theme.bold};
+`;
+
 const StyledParagraph = styled.p`
   font-size: ${({ theme }) => theme.fontSize.xs};
 `;
@@ -62,8 +67,16 @@ const AddItemBar = ({ category }) => {
   };
 
   const [FormValue, setFormValue] = useState(emptyForm);
+  const [isAlertShown, setIsAlertShown] = useState(false);
   const { state, dispatch } = useContext(PantryContext);
   const { products } = state;
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsAlertShown(false);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, [isAlertShown]);
 
   const checkIfUnique = (wantToAdd) => {
     const group = products.filter((group) => group.category === category);
@@ -79,6 +92,7 @@ const AddItemBar = ({ category }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setIsAlertShown(true);
     if (!checkIfUnique(FormValue.name)) {
       addItem(FormValue, category);
     }
@@ -102,6 +116,9 @@ const AddItemBar = ({ category }) => {
           required
           value={FormValue.name}
         />
+        {isAlertShown && (
+          <StyledErrorParagraph>That item already exists</StyledErrorParagraph>
+        )}
         <Input
           placeholder="quantity*"
           onChange={handleInputChange}
