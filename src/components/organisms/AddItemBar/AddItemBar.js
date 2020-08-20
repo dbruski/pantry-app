@@ -65,12 +65,23 @@ const AddItemBar = ({ category }) => {
   const { state, dispatch } = useContext(PantryContext);
   const { products } = state;
 
+  const checkIfUnique = (wantToAdd) => {
+    const group = products.filter((group) => group.category === category);
+    const items = group[0].items.map((item) => item.name.toLowerCase());
+    return items.includes(wantToAdd.toLowerCase());
+  };
+
   const handleInputChange = (e) =>
-    setFormValue({ ...FormValue, [e.target.name]: e.target.value });
+    setFormValue({
+      ...FormValue,
+      [e.target.name]: e.target.value,
+    });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addItem(FormValue, category);
+    if (!checkIfUnique(FormValue.name)) {
+      addItem(FormValue, category);
+    }
   };
 
   const addItem = (item, category) => {

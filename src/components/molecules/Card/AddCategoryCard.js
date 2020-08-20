@@ -42,19 +42,26 @@ const StyledButton = styled.button`
 `;
 
 const AddCategoryCard = () => {
-  const { dispatch } = useContext(PantryContext);
+  const { state, dispatch } = useContext(PantryContext);
   const [inputValue, setInputValue] = useState('');
   const inputField = useRef(null);
   const handleInputChange = (e) => setInputValue(e.target.value);
+
+  const checkIfUnique = (wantToAdd) => {
+    const categories = state.products.map((group) => group.category);
+    return categories.includes(wantToAdd.toLowerCase());
+  };
 
   const handleAddCategory = () => {
     if (!inputValue) {
       inputField.current.focus();
     } else {
-      dispatch(addCategoryAction(inputValue));
+      !checkIfUnique(inputValue) &&
+        dispatch(addCategoryAction(inputValue.toLowerCase()));
     }
     setInputValue('');
   };
+
   return (
     <StyledWrapper>
       <StyledHeader>
