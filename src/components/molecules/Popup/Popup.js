@@ -1,6 +1,7 @@
 import React, { useEffect, useContext } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { PantryContext } from '../../../context';
+import { device } from '../../../helpers/device';
 
 const appear = keyframes`
   0% {
@@ -34,7 +35,7 @@ const StyledWrapper = styled.div`
   left: 50%;
   bottom: 0;
   transform: translate(-50%, 0);
-  width: 430px;
+  width: auto;
   height: 100px;
   background: ${({ theme }) => theme.primary};
   padding: 0 10px;
@@ -44,6 +45,10 @@ const StyledWrapper = styled.div`
   align-items: center;
   z-index: 9999;
   animation: ${appear} 3s ease-in-out both;
+
+  @media ${device.screen} {
+    width: 430px;
+  }
 `;
 
 const StyledParagraph = styled.p`

@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Navbar from '../components/organisms/Navbar/Navbar';
+import Popup from '../components/molecules/Popup/Popup';
 import { device } from '../helpers/device';
+import { PantryContext } from '../context';
 
 const StyledWrapper = styled.div`
   position: relative;
@@ -32,13 +34,19 @@ const StyledMobileLogo = styled.header`
   }
 `;
 
-const PageTemplate = ({ children }) => (
-  <>
-    <Navbar />
-    <StyledMobileLogo>PantryApp</StyledMobileLogo>
-    <StyledWrapper>{children}</StyledWrapper>
-  </>
-);
+const PageTemplate = ({ children }) => {
+  const { state } = useContext(PantryContext);
+
+  return (
+    <>
+      <Navbar />
+      <StyledMobileLogo>PantryApp</StyledMobileLogo>
+      <StyledWrapper>{children}</StyledWrapper>
+
+      {state.popup.open && <Popup />}
+    </>
+  );
+};
 
 PageTemplate.propTypes = {
   children: PropTypes.node.isRequired,

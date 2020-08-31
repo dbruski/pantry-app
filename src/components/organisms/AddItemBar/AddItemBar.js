@@ -68,20 +68,19 @@ const AddItemBar = ({ category }) => {
 
   const [FormValue, setFormValue] = useState(emptyForm);
   const [isAlertShown, setIsAlertShown] = useState(false);
-  const { state, dispatch } = useContext(PantryContext);
+  const { state, dispatch, setPopup } = useContext(PantryContext);
   const { products } = state;
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    setTimeout(() => {
       setIsAlertShown(false);
-    }, 5000);
-    return () => clearInterval(interval);
+    }, 3000);
   }, [isAlertShown]);
 
   const checkIfUnique = (wantToAdd) => {
     const group = products.filter((group) => group.category === category);
     const items = group[0].items.map((item) => item.name.toLowerCase());
-    return items.includes(wantToAdd.toLowerCase());
+    return !items.includes(wantToAdd.toLowerCase());
   };
 
   const handleInputChange = (e) =>
@@ -92,15 +91,17 @@ const AddItemBar = ({ category }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setIsAlertShown(true);
-    if (!checkIfUnique(FormValue.name)) {
+    if (checkIfUnique(FormValue.name)) {
       addItem(FormValue, category);
+    } else {
+      setIsAlertShown(true);
     }
   };
 
   const addItem = (item, category) => {
     const index = products.findIndex((group) => group.category === category);
     dispatch(addItemAction(item, category, index));
+    setPopup(true, `Item ${item.name} was added to ${category}.`);
     setFormValue(emptyForm);
   };
 

@@ -102,7 +102,7 @@ const StyledLabel = styled.label`
 const Modal = ({ data, closeModal }) => {
   const { item, category, type } = data;
   const { name, quantity, minimum, measure } = item;
-  const { state, dispatch } = useContext(PantryContext);
+  const { state, dispatch, setPopup } = useContext(PantryContext);
   const { products } = state;
 
   const values = {
@@ -124,16 +124,19 @@ const Modal = ({ data, closeModal }) => {
   const editItem = (item, category) => {
     const index = products.findIndex((group) => group.category === category);
     dispatch(editItemAction(item, category, index));
+    setPopup(true, `Item ${item.name} was edited.`);
   };
 
   const deleteItem = (item, category) => {
     const index = products.findIndex((group) => group.category === category);
     dispatch(deleteItemAction(item, category, index));
+    setPopup(true, `Item ${item.name} was removed from ${category}.`);
   };
 
   const boughtItem = (item, category, bought) => {
     const index = products.findIndex((group) => group.category === category);
     dispatch(boughtItemAction(item, category, bought, index));
+    setPopup(true, `Amount of ${item.name} was changed`);
   };
 
   const handleSubmit = (e) => {

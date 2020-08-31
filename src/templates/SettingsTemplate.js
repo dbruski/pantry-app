@@ -50,7 +50,7 @@ const StyledButtonsContainer = styled.div`
 `;
 
 const SettingsTemplate = ({ state }) => {
-  const { dispatch } = useContext(PantryContext);
+  const { dispatch, setPopup } = useContext(PantryContext);
   const categories = state.products.map((group) => group.category);
   const { isThemeDark } = state;
   const [selectedCategory, setSelectedCategory] = useState('');
@@ -71,6 +71,7 @@ const SettingsTemplate = ({ state }) => {
 
   const deleteCategory = () => {
     dispatch(deleteCategoryAction(selectedCategory));
+    setPopup(true, `Category ${selectedCategory} was deleted.`);
     setIsItemGoingToBeDeleted(false);
   };
   const editCategory = () => {
@@ -79,6 +80,10 @@ const SettingsTemplate = ({ state }) => {
     );
     if (newCategoryName) {
       dispatch(editCategoryAction(selectedCategory, newCategoryName, index));
+      setPopup(
+        true,
+        `Category ${selectedCategory} was renamed to ${newCategoryName}`,
+      );
       setIsNameBeingChanged(false);
       setNewCategoryName('');
     }

@@ -47,34 +47,36 @@ const StyledErrorParagraph = styled.p`
 `;
 
 const AddCategoryCard = () => {
-  const { state, dispatch } = useContext(PantryContext);
+  const { state, dispatch, setPopup } = useContext(PantryContext);
   const [inputValue, setInputValue] = useState('');
   const [isAlertShown, setIsAlertShown] = useState(false);
   const inputField = useRef(null);
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    setTimeout(() => {
       setIsAlertShown(false);
     }, 5000);
-    return () => clearInterval(interval);
   }, [isAlertShown]);
 
   const handleInputChange = (e) => setInputValue(e.target.value);
+
+  const addCategory = () => {
+    dispatch(addCategoryAction(inputValue.toLowerCase()));
+    setPopup(true, `Category ${inputValue} was added.`);
+  };
 
   const checkIfUnique = (wantToAdd) => {
     const categories = state.products.map((group) =>
       group.category.toLowerCase(),
     );
-    return categories.includes(wantToAdd.toLowerCase());
+    return !categories.includes(wantToAdd.toLowerCase());
   };
 
   const handleAddCategory = () => {
     if (!inputValue) {
       inputField.current.focus();
     } else {
-      checkIfUnique(inputValue)
-        ? setIsAlertShown(true)
-        : dispatch(addCategoryAction(inputValue.toLowerCase()));
+      checkIfUnique(inputValue) ? addCategory() : setIsAlertShown(true);
     }
     setInputValue('');
   };
