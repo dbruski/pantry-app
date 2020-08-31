@@ -102,6 +102,14 @@ const reducer = (state, { type, payload }) => {
         ...state,
         isThemeDark: !state.isThemeDark,
       };
+    case 'SET_POPUP':
+      return {
+        ...state,
+        popup: {
+          open: payload.open,
+          message: payload.message,
+        },
+      };
     default:
       return state;
   }

@@ -55,5 +55,9 @@ export const initial =
           },
         ],
         isThemeDark: false,
+        popup: {
+          open: false,
+          message: '',
+        },
       }
     : JSON.parse(localStorage.getItem('pantry-state'));

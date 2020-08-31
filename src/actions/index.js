@@ -52,3 +52,10 @@ export const changeTheme = () => {
     type: 'CHANGE_THEME',
   };
 };
+
+export const setPopup = (open, message) => {
+  return {
+    type: 'SET_POPUP',
+    payload: { open, message },
+  };
+};
