@@ -6,7 +6,7 @@ import { PantryContext } from '../../../context';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const StyledWrapper = styled.div`
+const StyledWrapper = styled.form`
   height: 250px;
   background: ${({ theme }) => theme.grey};
   box-shadow: 0 10px 30px -10px hsl(0, 0%, 50%);
@@ -72,7 +72,8 @@ const AddCategoryCard = () => {
     return !categories.includes(wantToAdd.toLowerCase());
   };
 
-  const handleAddCategory = () => {
+  const handleAddCategory = (e) => {
+    e.preventDefault();
     if (!inputValue) {
       inputField.current.focus();
     } else {

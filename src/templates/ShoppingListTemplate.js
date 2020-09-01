@@ -165,7 +165,11 @@ const ShoppingListTemplate = ({ products }) => {
           <StyledHole></StyledHole>
         </StyledHolesContainer>
         <ul>
-          <StyledItemHeader>You need to buy:</StyledItemHeader>
+          <StyledItemHeader>
+            {neededItems.length
+              ? 'You need to buy:'
+              : "You don't need to go shopping"}
+          </StyledItemHeader>
           {neededItems.map((group) => (
             <div key={group.category}>
               <StyledItemCategory>{group.category}:</StyledItemCategory>

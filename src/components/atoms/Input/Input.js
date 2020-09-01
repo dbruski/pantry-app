@@ -33,6 +33,8 @@ const Input = styled.input`
 
       ::placeholder {
         color: ${({ theme }) => theme.white};
+        font-size: ${({ theme }) => theme.fontSize.l};
+        text-transform: lowercase;
       }
     `}
 
